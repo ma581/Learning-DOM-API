@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Page</title>
+    <style>
+        .highlight {
+            background: #3dcc4a;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+<p id="playground" class="red">Welcome to this playground</p>
+<p id="highlight-me" data-action="highlight">This is text to be highlighted</p>
+<div>
+    <button>Add highlight</button>
+    <button>Remove highlight</button>
+</div>
+<script type="text/javascript">
+    const body = document.querySelector('body');
+    body.addEventListener('click', event => {
+        console.log('CAPTURE: body');
+    }, true);
+
+    body.addEventListener('click', event => {
+        console.log('Bubble: body');
+    });
+
+    const div = document.querySelector('div');
+    div.addEventListener('click', event => {
+        console.log('CAPTURE: div');
+    }, true);
+
+    div.addEventListener('click', event => {
+        console.log('Bubble:  div');
+    });
+
+    const child = document.createElement('p');
+    child.textContent = "Child element created dynamically";
+    const parent = document.querySelector("p.red");
+    parent.appendChild(child);
+
+    const textToBeHigh = document.querySelector('[data-action="highlight"]');
+    const highlight = 'highlight';
+
+    const addHighlightButton = document.getElementsByTagName('button')[0];
+    addHighlightButton.addEventListener('click', event => {
+        event.preventDefault();
+        console.log('clicked!');
+        addClass(textToBeHigh, highlight);
+    });
+
+
+    const removeHighlightButton = document.getElementsByTagName('button')[1];
+    removeHighlightButton.addEventListener('click', event => {
+        event.preventDefault();
+        console.log('clicked: '+ event.target);
+        removeClass(textToBeHigh, highlight);
+    });
+
+
+    function addClass(element, clazz) {
+        element.classList.add(clazz);
+    }
+
+    function removeClass(el, clazz) {
+        el.classList.remove(clazz);
+    }
+</script>
+</body>
+</html>
