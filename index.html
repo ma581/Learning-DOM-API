@@ -14,48 +14,38 @@
 <p id="playground" class="red">Welcome to this playground</p>
 <p id="highlight-me" data-action="highlight">This is text to be highlighted</p>
 <div>
-    <button>Add highlight</button>
-    <button>Remove highlight</button>
+    <button id="add-highlight">Add highlight</button>
+    <button id="remove-highlight">Remove highlight</button>
 </div>
 <script type="text/javascript">
-    const body = document.querySelector('body');
-    body.addEventListener('click', event => {
-        console.log('CAPTURE: body');
-    }, true);
-
-    body.addEventListener('click', event => {
-        console.log('Bubble: body');
-    });
-
-    const div = document.querySelector('div');
-    div.addEventListener('click', event => {
-        console.log('CAPTURE: div');
-    }, true);
-
-    div.addEventListener('click', event => {
-        console.log('Bubble:  div');
-    });
-
     const child = document.createElement('p');
     child.textContent = "Child element created dynamically";
     const parent = document.querySelector("p.red");
     parent.appendChild(child);
 
+    const body = document.querySelector('body');
+    body.addEventListener('click', event => console.log(`Capture ${event.type} at ${body.tagName}`), true);
+    body.addEventListener('click', event => console.log(`Bubble ${event.type} at ${body.tagName}`));
+
+    const div = document.querySelector('div');
+    div.addEventListener('click', event => console.log(`Capture ${event.type} at ${div.tagName}`), true);
+    div.addEventListener('click', event => console.log(`Bubble ${event.type} at ${div.tagName}`));
+
     const textToBeHigh = document.querySelector('[data-action="highlight"]');
     const highlight = 'highlight';
 
-    const addHighlightButton = document.getElementsByTagName('button')[0];
+    const addHighlightButton = document.querySelector('#add-highlight');
     addHighlightButton.addEventListener('click', event => {
         event.preventDefault();
-        console.log('clicked!');
+        console.log(`clicked  ${event.srcElement.tagName}`);
         addClass(textToBeHigh, highlight);
     });
 
 
-    const removeHighlightButton = document.getElementsByTagName('button')[1];
+    const removeHighlightButton = document.querySelector('#remove-highlight');
     removeHighlightButton.addEventListener('click', event => {
         event.preventDefault();
-        console.log('clicked: '+ event.target);
+        console.log(`clicked  ${event.srcElement.tagName}`);
         removeClass(textToBeHigh, highlight);
     });
 
